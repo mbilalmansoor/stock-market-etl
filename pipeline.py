@@ -1,6 +1,7 @@
 import polars as pl
 import yfinance as yf
 import database as db
+from datetime import datetime, timedelta
 
 def execute_etl_flow(ticker: str, start_date_str: str, end_date_str: str):
     """
@@ -44,3 +45,21 @@ def execute_etl_flow(ticker: str, start_date_str: str, end_date_str: str):
 
     except Exception as pipeline_err:
         return f"❌ Critical Pipeline Failure: {str(pipeline_err)}", pl.DataFrame()
+
+
+# --- AUTOMATION ORCHESTRATION LAYER ---
+
+def execute_automatic_daily_sync(ticker: str):
+    """
+    Calculates the latest dates automatically and runs the ETL flow.
+    Looks back 5 days to safely capture weekend data gaps.
+    """
+    today = datetime.today()
+    five_days_ago = today - timedelta(days=5)
+    
+    start_date_str = five_days_ago.strftime("%Y-%m-%d")
+    end_date_str = today.strftime("%Y-%m-%d")
+    
+    print(f"🔄 Automation Engine: Triggering sync for {ticker.upper()} ({start_date_str} to {end_date_str})")
+    status, _ = execute_etl_flow(ticker, start_date_str, end_date_str)
+    print(f"📡 Engine Log Result: {status}")
