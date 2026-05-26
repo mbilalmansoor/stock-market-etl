@@ -1,0 +1,20 @@
+{
+    "workbench.editorAssociations": {
+        "*.copilotmd": "vscode.markdown.preview.editor",
+        "*.parquet": "duckdb.dataFileViewer",
+        "*.csv": "duckdb.dataFileViewer",
+        "*.tsv": "duckdb.dataFileViewer",
+        "*.xlsx": "duckdb.dataFileViewer",
+        "*.duckdb": "duckdb.tableViewer"
+    },
+    "duckdb.databases": [
+        {
+            "alias": "stock_data",
+            "type": "file",
+            "path": "/workspaces/etf-pipeline-stocks/stock_data.duckdb",
+            "attached": true,
+            "readOnly": false
+        }
+    ],
+    "duckdb.defaultDatabase": "stock_data"
+}
