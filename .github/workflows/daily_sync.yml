@@ -2,8 +2,8 @@ name: Scheduled Stock ETL Sync
 
 on:
   schedule:
-    # 09:25 UTC is exactly 2:25 PM Pakistan Time (PKT)
-    - cron: '50 9 * * *'
+    
+    - cron: '0 18 * * 1-5'
   workflow_dispatch:
 
 jobs:
