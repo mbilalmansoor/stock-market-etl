@@ -2,9 +2,9 @@ name: Scheduled Stock ETL Sync
 
 on:
   schedule:
-    # 09:10 UTC evaluates precisely to 2:10 PM Pakistan Time (PKT) for your test run
-    - cron: '10 9 * * *'
-  workflow_dispatch: # Keeps your manual "Run Now" action button active as a backup
+    # 09:25 UTC is exactly 2:25 PM Pakistan Time (PKT)
+    - cron: '25 9 * * *'
+  workflow_dispatch:
 
 jobs:
   run-pipeline:
