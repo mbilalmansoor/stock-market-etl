@@ -2,7 +2,7 @@ name: Scheduled Stock ETL Sync
 
 on:
   schedule:
-    - cron: '0 4 * * 1-5'
+    - cron: '12 11 * * 1-5'
   
   workflow_dispatch:
 
