@@ -12,8 +12,7 @@
             "alias": "stock_data",
             "type": "file",
             "path": "/workspaces/etf-pipeline-stocks/stock_data.duckdb",
-            "attached": true,
-            "readOnly": false
+            "attached": true
         }
     ],
     "duckdb.defaultDatabase": "stock_data"
