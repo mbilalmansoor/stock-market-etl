@@ -2,21 +2,18 @@ name: Scheduled Stock ETL Sync
 
 on:
   schedule:
-    - cron: '12 11 * * 1-5'
-  
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-# 🔥 FIX: Grant permission to write back changes to your GitHub repository
-permissions:
-  contents: write
+   
+    - cron: '17 14 * * *'
+  workflow_dispatch: # Keeps your manual "Run Now" action button active as a backup
 
 jobs:
   run-pipeline:
     runs-on: ubuntu-latest
-
+    # 🔥 FIXED: The permissions configuration belongs strictly inside the specific job scope 
+    # to avoid double-definition conflicts at the root of the file.
+    permissions:
+      contents: write
+      
     steps:
       - name: Checkout Code Repository
         uses: actions/checkout@v4
@@ -26,22 +23,17 @@ jobs:
         with:
           version: "latest"
 
-      - name: Install Python 3.10
+      - name: Pin Execution to Python 3.10
         run: uv python install 3.10
-
-      - name: Sync Dependencies
-        run: uv sync
 
       - name: Execute Daily Sync Pipeline Script
         run: uv run python cron_job.py
 
-      - name: Commit and Push Updated DuckDB File
+      - name: Automate Persistence (Commit Changes Back to DuckDB File)
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-
           git add stock_data.duckdb
-
+          # [skip ci] prevents the action from triggering itself in an infinite loop!
           git commit -m "database-update: dynamic cron ingestion [skip ci]" || echo "No data modifications encountered."
-
           git push
